@@ -2,7 +2,8 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [main]
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 env:
@@ -36,7 +37,9 @@ jobs:
           context: .
           file: dockerfile
           push: true
-          tags: ghcr.io/drejom/potpie:latest
+          tags: |
+            ghcr.io/drejom/potpie:latest
+            ghcr.io/drejom/potpie:${{ github.ref_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
